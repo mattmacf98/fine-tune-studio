@@ -1,0 +1,18 @@
+[project]
+name = "fine-tune-studio"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.12"
+dependencies = [
+    "datasets>=5.0.0",
+    "llama-cpp-python>=0.3.33",
+    "mlx>=0.32.0",
+    "mlx-lm>=0.31.3",
+    "ollama>=0.6.2",
+    "tokenizers>=0.22.2",
+    "torch>=2.13.0",
+    "transformers>=5.0.0,<5.13.0",
+]
+
+[project.scripts]
+fine-tune-studio = "app:main"
