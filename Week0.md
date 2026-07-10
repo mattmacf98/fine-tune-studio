@@ -113,9 +113,9 @@ ftstudio/
     └── test_smoke.py
 ```
 
-- [ ] `git init`, create the tree, commit.
-- [ ] Write a minimal `pyproject.toml` declaring the package and ruff settings.
-- [ ] `tests/test_smoke.py`: one test that imports `core` and asserts `torch.backends.mps.is_available()` (skips gracefully in CI where there's no MPS).
+- [x] `git init`, create the tree, commit.
+- [x] Write a minimal `pyproject.toml` declaring the package and ruff settings.
+- [x] `tests/test_smoke.py`: one test that imports `core` and asserts `torch.backends.mps.is_available()` (skips gracefully in CI where there's no MPS).
 
 
 
@@ -149,11 +149,11 @@ def dpo_loss(policy_logps, ref_logps, beta) -> torch.Tensor:
 
 The one script that runs *both* locally and on a pod and tells you what you're working with. Build it to detect its environment.
 
-- [ ] It should report:
+- [x] It should report:
   - **Everywhere:** platform, Python, torch version, torch device (`mps`/`cuda`/`cpu`).
   - **On Mac:** chip name, total unified memory, MPS available/built.
   - **On a CUDA pod:** GPU name, VRAM, compute capability, whether **bf16** and **FP8** are supported (FP8 needs Ada/Hopper, i.e. sm_89+/sm_90+).
-- [ ] Include a `--bench` flag that loads Qwen2.5-0.5B and reports tokens/sec + peak memory, so the same command benchmarks any machine.
+- [x] Include a `--bench` flag that loads Qwen2.5-0.5B and reports tokens/sec + peak memory, so the same command benchmarks any machine.
 
 > **Concept to internalize this week — unified memory ≠ VRAM.** Your 16GB is shared by macOS, your apps, the model weights, *and* training activations. Budget realistically: after the OS you have ~10–12GB of working room. A 0.5B model in bf16 is ~1GB of weights but training it (grads + Adam moments + activations) can still push past that at long context. This is *why* the course keeps local dev at 0.5B–3B and bursts to cloud for 7B+.
 
@@ -167,11 +167,11 @@ This is the capability that makes the whole Mac-primary plan viable. Build it, t
 
 ### 4a. Install and configure `runpodctl`
 
-- [ ] Install: `brew install runpod/runpodctl/runpodctl` (or `wget` the release binary).
-- [ ] Configure: `runpodctl config --apiKey=YOUR_KEY` (stored in `~/.runpod/config.toml`).
-- [ ] Register your SSH key: `runpodctl ssh add-key --key-file ~/.ssh/id_ed25519.pub`
+- [x] Install: `brew install runpod/runpodctl/runpodctl` (or `wget` the release binary).
+- [x] Configure: `runpodctl config --apiKey=YOUR_KEY` (stored in `~/.runpod/config.toml`).
+- [x] Register your SSH key: `runpodctl ssh add-key --key-file ~/.ssh/id_ed25519.pub`
   (Generate one first if needed: `ssh-keygen -t ed25519`.)
-- [ ] Verify: `runpodctl pod list` returns (an empty list is fine).
+- [x] Verify: `runpodctl pod list` returns (an empty list is fine).
 
 > **CLI shape (noun-verb):** `runpodctl pod create --image=... --gpu-id=...`, `pod list`, `pod get <id>`, `pod stop <id>`, `pod delete <id>`. Pods come with `runpodctl` pre-installed and a pod-scoped key.
 
