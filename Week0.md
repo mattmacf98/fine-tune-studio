@@ -259,7 +259,7 @@ echo ">>> Done. Pod will be terminated by trap."
 ## Part 5 — CI (30 min)
 
 - [x] `.github/workflows/ci.yml`: on push, run `ruff check .` and `pytest`. Runners are Linux/CPU with no MPS — make the MPS assertion in `test_smoke.py` a skip, not a failure, when `torch.backends.mps.is_available()` is `False`.
-- [ ] Push, confirm the badge goes green.
+- [x] Push, confirm the badge goes green.
 
 ---
 
@@ -267,9 +267,9 @@ echo ">>> Done. Pod will be terminated by trap."
 
 ## Part 6 — Ship it (15 min)
 
-- [ ] Fill in `README.md`: one paragraph on what Fine-Tune Studio will become, the local/cloud split philosophy, and a "reproduce this" quickstart.
-- [ ] Commit everything. `git tag v0.1 && git push --tags`.
-- [ ] **Ships to platform:** repo skeleton, CI, `hardware_probe`, `make train-remote`, `make cuda-check`, dual MLX/MPS inference smoke test.
+- [x] Fill in `README.md`: one paragraph on what Fine-Tune Studio will become, the local/cloud split philosophy, and a "reproduce this" quickstart.
+- [x] Commit everything. `git tag v0.1 && git push --tags`.
+- [x] **Ships to platform:** repo skeleton, CI, `hardware_probe`, `make train-remote`, `make cuda-check`, dual MLX/MPS inference smoke test.
 
 ---
 
@@ -279,12 +279,12 @@ echo ">>> Done. Pod will be terminated by trap."
 
 Keep these light — Week 0 is mostly hands-on. Read for orientation, not mastery.
 
-1. **MLX-LM docs + the WWDC25 "Explore LLMs on Apple Silicon with MLX" session.** *Extract:* how unified memory changes the mental model vs CUDA; that `mlx_lm.lora` trains adapters directly on quantized weights (QLoRA-style) locally; which model families are supported. This is your local-training foundation for the whole course.
-2. **RunPod docs: "Transfer files" + the** `runpodctl` **README.** *Extract:* the exact rsync-over-SSH syntax (`rsync -avz -e "ssh -p PORT" ...`), the noun-verb CLI shape, and that per-second billing means the pod's *uptime* is your bill — hence the trap-on-exit discipline.
-3. **PyTorch MPS backend docs (**`torch.backends.mps`**).** *Extract:* how to detect MPS, that some ops fall back to CPU or aren't implemented (you'll hit this in W1), and the `PYTORCH_ENABLE_MPS_FALLBACK=1` escape hatch for missing ops.
-4. **Safetensors format README.** *Extract:* why it exists (safe, zero-copy, fast vs pickle), and that it's the default checkpoint format you'll produce and load all semester. Short read.
-5. **Kipply, "Transformer Inference Arithmetic"** (skim now, deep-read in W1). *Extract:* the memory/latency intuition that motivates `memory_estimator.py` and the whole "stay small locally, burst for big" strategy.
-6. `nvidia-smi` **reference** (you'll only use it on pods). *Extract:* how to read VRAM usage, utilization, and process list — your first move when a cloud run OOMs or hangs.
+- [ ] [WWDC25: Explore LLMs on Apple Silicon with MLX](https://youtu.be/tn2Hvw7eCsw?si=r0uds04-RVUPbgTB) + MLX-LM docs. *Extract:* how unified memory changes the mental model vs CUDA; that `mlx_lm.lora` trains adapters directly on quantized weights (QLoRA-style) locally; which model families are supported. This is your local-training foundation for the whole course.
+- [ ] [RunPod docs: Transfer files](https://docs.runpod.io/pods/storage/transfer-files) + the `runpodctl` README. *Extract:* the exact rsync-over-SSH syntax (`rsync -avz -e "ssh -p PORT" ...`), the noun-verb CLI shape, and that per-second billing means the pod's *uptime* is your bill — hence the trap-on-exit discipline.
+- [ ] [PyTorch MPS backend docs](https://docs.pytorch.org/docs/2.13/notes/mps.html) (`torch.backends.mps`). *Extract:* how to detect MPS, that some ops fall back to CPU or aren't implemented (you'll hit this in W1), and the `PYTORCH_ENABLE_MPS_FALLBACK=1` escape hatch for missing ops.
+- [ ] [Safetensors format README](https://github.com/mlverse/safetensors/blob/main/README.md). *Extract:* why it exists (safe, zero-copy, fast vs pickle), and that it's the default checkpoint format you'll produce and load all semester. Short read.
+- [ ] [Kipply, "Transformer Inference Arithmetic"](https://kipp.ly/p/transformer-inference-arithmetic) (skim now, deep-read in W1). *Extract:* the memory/latency intuition that motivates `memory_estimator.py` and the whole "stay small locally, burst for big" strategy.
+- [ ] [`nvidia-smi` cheat sheet](https://gist.github.com/omerfsen/8ecb620675525ac724a92bdf5a31a4b3) (you'll only use it on pods). *Extract:* how to read VRAM usage, utilization, and process list — your first move when a cloud run OOMs or hangs.
 
 *(Optional, if you have time:)* skim the **Qwen2.5 technical report** intro — Qwen2.5 is the model spine for the course, so knowing its sizes and architecture family pays off immediately in W1.
 

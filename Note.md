@@ -1,0 +1,1 @@
+1. Idea to make the remote_train setup a python package thing so you can tag gpu run functioons and run on arbitrary gpu container platforms with ease
