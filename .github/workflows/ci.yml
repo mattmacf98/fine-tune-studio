@@ -11,9 +11,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: install uv
-        uses: astral-sh/uv@v0.6.10
-        with:
-          version: latest
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b
       - name: setup python
         uses: actions/setup-python@v4
         with:
