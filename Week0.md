@@ -67,7 +67,7 @@
 ### 1d. llama.cpp + Ollama (serving stack, used from W12–13)
 
 - [x] **Ollama:** `brew install ollama`, then `ollama run qwen2.5:0.5b` to confirm local serving works.
-- [ ] **llama.cpp** (build from source so you have the `quantize` and `convert` tools later):
+- [x] **llama.cpp** (build from source so you have the `quantize` and `convert` tools later):
   ```bash
   git clone https://github.com/ggerganov/llama.cpp && cd llama.cpp
   cmake -B build && cmake --build build --config Release
@@ -233,8 +233,8 @@ rsync -avz -e "ssh -p $PORT -o StrictHostKeyChecking=no" \
 echo ">>> Done. Pod will be terminated by trap."
 ```
 
-- [ ] Add `jq` (`brew install jq`) for JSON parsing.
-- [ ] Wrap it in a Make target:
+- [x] Add `jq` (`brew install jq`) for JSON parsing.
+- [x] Wrap it in a Make target:
   ```makefile
   train-remote:      ## rsync -> run on GPU -> pull -> kill pod
   	./scripts/remote_train.sh "$(CMD)"
@@ -246,9 +246,9 @@ echo ">>> Done. Pod will be terminated by trap."
 
 ### 4d. Prove the loop with a throwaway job — **do this before you trust it**
 
-- [ ] `make cuda-check` — this creates a pod, runs `hardware_probe.py --bench` on real CUDA, pulls nothing important, and **deletes the pod.**
-- [ ] While it runs, open the RunPod dashboard and *watch the pod appear and then disappear.* Confirm with `runpodctl pod list` that nothing is left running.
-- [ ] Deliberately Ctrl-C a run mid-way and confirm the `trap` still deletes the pod. If it doesn't, fix it now — this is the safety mechanism.
+- [x] `make cuda-check` — this creates a pod, runs `hardware_probe.py --bench` on real CUDA, pulls nothing important, and **deletes the pod.**
+- [x] While it runs, open the RunPod dashboard and *watch the pod appear and then disappear.* Confirm with `runpodctl pod list` that nothing is left running.
+- [x] Deliberately Ctrl-C a run mid-way and confirm the `trap` still deletes the pod. If it doesn't, fix it now — this is the safety mechanism.
 
 > **Failure modes to expect the first time:** SSH not ready yet (add polling + timeout); `StrictHostKeyChecking` prompt hanging the script (disable it as shown); rsync pushing your multi-GB `data/` or `.venv` (exclude them); pod created in a region with no 4090 available (`pod create` errors — retry or widen GPU selection). Budget an hour for these; they're one-time.
 
@@ -258,7 +258,7 @@ echo ">>> Done. Pod will be terminated by trap."
 
 ## Part 5 — CI (30 min)
 
-- [ ] `.github/workflows/ci.yml`: on push, run `ruff check .` and `pytest`. Runners are Linux/CPU with no MPS — make the MPS assertion in `test_smoke.py` a skip, not a failure, when `torch.backends.mps.is_available()` is `False`.
+- [x] `.github/workflows/ci.yml`: on push, run `ruff check .` and `pytest`. Runners are Linux/CPU with no MPS — make the MPS assertion in `test_smoke.py` a skip, not a failure, when `torch.backends.mps.is_available()` is `False`.
 - [ ] Push, confirm the badge goes green.
 
 ---
