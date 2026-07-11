@@ -19,6 +19,6 @@ jobs:
       - name: install dependencies
         run: uv sync --group dev
       - name: lint and test
-        run: uv runruff check .
+        run: uv run ruff check .
       - name: pytest
         run: uv run pytest
