@@ -1,0 +1,26 @@
+name: CI
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: install uv
+        uses: astral-sh/uv@v0.6.10
+        with:
+          version: latest
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+      - name: install dependencies
+        run: uv sync --group dev
+      - name: lint and test
+        run: uv runruff check .
+      - name: pytest
+        run: uv run pytest
